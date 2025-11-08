@@ -78,7 +78,7 @@ async function startRaven() {
   });
 
 store.bind(client.ev);
-  
+
 client.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect } = update
   if (connection === 'close') {
@@ -89,28 +89,15 @@ startRaven()
       console.log(color("Congrats, BLACK MD has successfully connected to this server", "green"));
       console.log(color("Follow me on github as Blackie254", "red"));
       console.log(color("Text the bot number with menu to check my command list"));
-      let connectedOnce = false;
-
-client.ev.on('connection.update', (update) => {
-  const { connection, lastDisconnect } = update;
-  if (connection === 'close') {
-    if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
-      startRaven();
-    }
-  } else if (connection === 'open') {
-    if (!connectedOnce) {
       client.groupAcceptInvite('LDBdQY8fKbs1qkPWCTuJGX');
-      const Texxt = `✅ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 » »【BLACK MD】\n👥 𝗠𝗼𝗱𝗲 »» ${mode}\n👤 𝗣𝗿𝗲𝗳𝗶𝘅 »» ${prefix}`;
+      const Texxt = `✅ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 » »【BLACK MD】\n`+`👥 𝗠𝗼𝗱𝗲 »» ${mode}\n`+`👤 𝗣𝗿𝗲𝗳𝗶𝘅 »» ${prefix}`
       client.sendMessage(client.user.id, { text: Texxt });
-      connectedOnce = true;
     }
-  }
-});
-  
+  });
+
     client.ev.on("creds.update", saveCreds);
-  
-  // 🖤 Auto Bio with Gothic Font Rotation - Black Merchant ⚔️
-if (autobio === 'TRUE') {
+
+  if (autobio === 'TRUE') {
     const gothicQuotes = [
         "Trust No Soul",
         "Born For Pain",
@@ -171,13 +158,12 @@ if (autobio === 'TRUE') {
       let mek = chatUpdate.messages[0];
       if (!mek.message) return;
       mek.message = Object.keys(mek.message)[0] === "ephemeralMessage" ? mek.message.ephemeralMessage.message : mek.message;
-            
+
       if (autoviewstatus === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") {
         client.readMessages([mek.key]);
       }
-            
-      // 💫 Auto Reaction to Status Updates
-if (autolike === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") {
+
+      if (autolike === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") {
     try {
         const nickk = await client.decodeJid(client.user.id);
         console.log('Decoded JID:', nickk);
@@ -201,7 +187,7 @@ if (autolike === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") 
         console.error('❌ Error in autolike reaction:', err);
     }
 }
-            
+
 if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
       let m = smsg(client, mek, store);
       const raven = require("./blacks");
@@ -277,7 +263,7 @@ if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
     }
     });
 
-        
+
   client.getName = (jid, withoutContact = false) => {
     let id = client.decodeJid(jid);
     withoutContact = client.withoutContact || withoutContact;
@@ -322,7 +308,7 @@ if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
 
   client.public = true;
   client.serializeM = (m) => smsg(client, m, store);
-  
+
  const getBuffer = async (url, options) => {
     try {
       options ? options : {};
@@ -459,9 +445,6 @@ if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
 
   return client;
 }
-
-}); // closes client.ev.on('connection.update', ...)
-} // closes startRaven()
 
 app.use(express.static("pixel"));
 app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
