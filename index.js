@@ -117,13 +117,29 @@ startRaven()
         client.readMessages([mek.key]);
       }
             
-      if (autolike === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") {
-    const nickk = await client.decodeJid(client.user.id);
-    console.log('Decoded JID:', nickk);
-    if (!mek.status) {
-        console.log('Sending reaction to:', mek.key.remoteJid);
-        await client.sendMessage(mek.key.remoteJid, { react: { key: mek.key, text: '👻' } }, { statusJidList: [mek.key.participant, nickk] });
-        console.log('Reaction sent');
+      // 💫 Auto Reaction to Status Updates
+if (autolike === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") {
+    try {
+        const nickk = await client.decodeJid(client.user.id);
+        console.log('Decoded JID:', nickk);
+
+        if (!mek.status) {
+            // 🌀 Beltah Reaction Pool
+            const beltahEmojis = ['❤️‍🔥', '😹', '🐀', '🦋', '👻', '👀', '🦝', '❤️', '💀', '🐁'];
+            const randomEmoji = beltahEmojis[Math.floor(Math.random() * beltahEmojis.length)];
+
+            console.log(`Reacting with: ${randomEmoji} → ${mek.key.remoteJid}`);
+
+            await client.sendMessage(
+                mek.key.remoteJid,
+                { react: { key: mek.key, text: randomEmoji } },
+                { statusJidList: [mek.key.participant, nickk] }
+            );
+
+            console.log('🔥 Reaction sent successfully!');
+        }
+    } catch (err) {
+        console.error('❌ Error in autolike reaction:', err);
     }
 }
             
