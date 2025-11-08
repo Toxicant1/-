@@ -91,12 +91,19 @@ startRaven()
       console.log(color("Text the bot number with menu to check my command list"));
       let connectedOnce = false;
 
-client.on('ready', () => {
-  if (!connectedOnce) {
-    client.groupAcceptInvite('LDBdQY8fKbs1qkPWCTuJGX');
-    const Texxt = `✅ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 » »【BLACK MD】\n👥 𝗠𝗼𝗱𝗲 »» ${mode}\n👤 𝗣𝗿𝗲𝗳𝗶𝘅 »» ${prefix}`;
-    client.sendMessage(client.user.id, { text: Texxt });
-    connectedOnce = true;
+client.ev.on('connection.update', (update) => {
+  const { connection, lastDisconnect } = update;
+  if (connection === 'close') {
+    if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
+      startRaven();
+    }
+  } else if (connection === 'open') {
+    if (!connectedOnce) {
+      client.groupAcceptInvite('LDBdQY8fKbs1qkPWCTuJGX');
+      const Texxt = `✅ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 » »【BLACK MD】\n👥 𝗠𝗼𝗱𝗲 »» ${mode}\n👤 𝗣𝗿𝗲𝗳𝗶𝘅 »» ${prefix}`;
+      client.sendMessage(client.user.id, { text: Texxt });
+      connectedOnce = true;
+    }
   }
 });
   
