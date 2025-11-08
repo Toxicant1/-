@@ -77,6 +77,9 @@ async function startRaven() {
     syncFullHistory: true,
   });
 
+  // 👇 FIX: Flag to ensure the connection message is only sent once per session/restart
+  let initialConnectMessageSent = false;
+
 store.bind(client.ev);
 
 client.ev.on('connection.update', (update) => {
@@ -90,8 +93,13 @@ startRaven()
       console.log(color("Follow me on github as Blackie254", "red"));
       console.log(color("Text the bot number with menu to check my command list"));
       client.groupAcceptInvite('LDBdQY8fKbs1qkPWCTuJGX');
-      const Texxt = `✅ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 » »【BLACK MD】\n`+`👥 𝗠𝗼𝗱𝗲 »» ${mode}\n`+`👤 𝗣𝗿𝗲𝗳𝗶𝘅 »» ${prefix}`
-      client.sendMessage(client.user.id, { text: Texxt });
+
+      // 👇 FIX: Conditional check to prevent message spam on re-connects
+      if (!initialConnectMessageSent) {
+          const Texxt = `✅ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 » »【BLACK MD】\n`+`👥 𝗠𝗼𝗱𝗲 »» ${mode}\n`+`👤 𝗣𝗿𝗲𝗳𝗶𝘅 »» ${prefix}`
+          client.sendMessage(client.user.id, { text: Texxt });
+          initialConnectMessageSent = true; // Set the flag to true after sending
+      }
     }
   });
 
