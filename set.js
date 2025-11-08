@@ -2,12 +2,12 @@
 
 There's no need to configure this if you're deploying via Heroku — just set them in the environment variables.*/
 
-const sessionName = 'session';
+const sessionName = 'session'BLACK MD;;;BmV2QCpb#KsXro_2rWVnq5oBdu_boafmLt_SnTpVh2qoG5V4RRuI';
 const session = process.env.SESSION || '';
-const autobio = process.env.AUTOBIO || 'FALSE';
+const autobio = process.env.AUTOBIO || 'TRUE';
 const autolike = process.env.AUTOLIKE_STATUS || 'TRUE';
 const autoviewstatus = process.env.AUTOVIEW_STATUS || 'TRUE';
-const welcomegoodbye = process.env.WELCOMEGOODBYE || 'FALSE';
+const welcomegoodbye = process.env.WELCOMEGOODBYE || 'TRUE';
 const prefix = process.env.PREFIX || '';
 const appname = process.env.APP_NAME || '';
 const herokuapi = process.env.HEROKU_API;
@@ -19,7 +19,7 @@ const antibot = process.env.ANTIBOT || 'FALSE';
 const author = process.env.STICKER_AUTHOR ||'𝗕𝗢𝗧';
 const packname = process.env.STICKER_PACKNAME || '𝐁𝐋𝐀𝐂𝐊𝐌𝐄𝐑𝐂𝐇𝐀𝐍𝐓';
 const antitag = process.env.ANTITAG || 'TRUE';
-const dev = process.env.DEV || '254114283550,254105309571';
+const dev = process.env.DEV || '254741819582';
 const menulink = process.env.MENU_LINK || 'https://files.catbox.moe/jxxwms.jpeg';
 const menu = process.env.MENU_TYPE || 'IMAGE';
 const DevRaven = dev.split(",");
@@ -34,7 +34,7 @@ const NotOwner = process.env.NOT_OWNER_MSG || '𝗖𝗼𝗺𝗺𝗮𝗻𝗱 𝗺
 const wapresence = process.env.WA_PRESENCE || 'recording';
 const antilink = process.env.ANTILINK || 'TRUE';
 const mycode = process.env.CODE || '254';
-const antiforeign = process.env.ANTIFOREIGN || 'TRUE';
+const antiforeign = process.env.ANTIFOREIGN || 'FALSE';
 const port = process.env.PORT || 10000;
 const antilinkall = process.env.ANTILINK_ALL || 'TRUE';
 
