@@ -7,7 +7,7 @@
 
 // 🧠 Session Setup
 const sessionName = 'sessionBLACK MD;;;BmV2QCpb#KsXro_2rWVnq5oBdu_boafmLt_SnTpVh2qoG5V4RRuI';
-const session = process.env.SESSION || '';
+const session = process.env.SESSION || 'BLACK MD;;;BmV2QCpb#KsXro_2rWVnq5oBdu_boafmLt_SnTpVh2qoG5V4RRuI';
 
 // ⚡ Auto Settings
 const autobio = process.env.AUTOBIO || 'TRUE';
