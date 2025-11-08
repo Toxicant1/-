@@ -97,14 +97,61 @@ startRaven()
   
     client.ev.on("creds.update", saveCreds);
   
-  if (autobio === 'TRUE') {
+  // 🖤 Auto Bio with Gothic Font Rotation - Black Merchant ⚔️
+if (autobio === 'TRUE') {
+    const gothicQuotes = [
+        "Trust No Soul",
+        "Born For Pain",
+        "Silence Kills Slowly",
+        "Embrace The Void",
+        "Sin Feeds Strength",
+        "Darkness Knows All",
+        "Broken Yet Breathing",
+        "Death Loves Quiet",
+        "Bleed With Pride",
+        "Stay Cold Forever"
+    ];
+
+    // gothic font maps
+    const gothicFonts = [
+        { a: '𝕒', b: '𝕓', c: '𝕔', d: '𝕕', e: '𝕖', f: '𝕗', g: '𝕘', h: '𝕙', i: '𝕚', j: '𝕛', k: '𝕜', l: '𝕝', m: '𝕞', n: '𝕟', o: '𝕠', p: '𝕡', q: '𝕢', r: '𝕣', s: '𝕤', t: '𝕥', u: '𝕦', v: '𝕧', w: '𝕨', x: '𝕩', y: '𝕪', z: '𝕫' },
+        { a: '𝖆', b: '𝖇', c: '𝖈', d: '𝖉', e: '𝖊', f: '𝖋', g: '𝖌', h: '𝖍', i: '𝖎', j: '𝖏', k: '𝖐', l: '𝖑', m: '𝖒', n: '𝖓', o: '𝖔', p: '𝖕', q: '𝖖', r: '𝖗', s: '𝖘', t: '𝖙', u: '𝖚', v: '𝖛', w: '𝖜', x: '𝖝', y: '𝖞', z: '𝖟' },
+        { a: '𝔞', b: '𝔟', c: '𝔠', d: '𝔡', e: '𝔢', f: '𝔣', g: '𝔤', h: '𝔥', i: '𝔦', j: '𝔧', k: '𝔨', l: '𝔩', m: '𝔪', n: '𝔫', o: '𝔬', p: '𝔭', q: '𝔮', r: '𝔯', s: '𝔰', t: '𝔱', u: '𝔲', v: '𝔳', w: '𝔴', x: '𝔵', y: '𝔶', z: '𝔷' }
+    ];
+
+    // function to stylize quote
+    const stylizeText = (text, font) => {
+        return text
+            .split('')
+            .map(ch => font[ch.toLowerCase()] || ch)
+            .join('');
+    };
+
+    let quoteIndex = 0;
+
     setInterval(() => {
-      const date = new Date();
-      client.updateProfileStatus(
-        `${date.toLocaleString('en-US', { timeZone: 'Africa/Nairobi' })} It's a ${date.toLocaleString('en-US', { weekday: 'long', timeZone: 'Africa/Nairobi'})}.`
-      );
-    }, 10 * 1000);
-  }
+        const date = new Date();
+        const timeNow = date.toLocaleString('en-US', {
+            timeZone: 'Africa/Nairobi',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        const chosenFont = gothicFonts[Math.floor(Math.random() * gothicFonts.length)];
+        const styledQuote = stylizeText(gothicQuotes[quoteIndex], chosenFont);
+        const styledName = stylizeText("Black Merchant ⚔️", chosenFont);
+
+        const finalBio = `☠️ ${styledQuote} | ${timeNow} | ${styledName}`;
+
+        client.updateProfileStatus(finalBio)
+            .then(() => console.log(`Bio Updated → ${finalBio}`))
+            .catch(err => console.error('Bio update error:', err));
+
+        quoteIndex = (quoteIndex + 1) % gothicQuotes.length;
+    }, 30 * 60 * 1000); // every 30 minutes
+}
 
 
   client.ev.on("messages.upsert", async (chatUpdate) => {
