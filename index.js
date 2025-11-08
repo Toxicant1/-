@@ -453,6 +453,9 @@ if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
   return client;
 }
 
+}); // closes client.ev.on('connection.update', ...)
+} // closes startRaven()
+
 app.use(express.static("pixel"));
 app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
