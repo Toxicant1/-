@@ -90,7 +90,7 @@ client.ev.on('connection.update', (update) => {
     if (shouldReconnect) {
       console.log("🔁 Connection closed, reconnecting...");
       startRaven();
-      hasSentConnectedMsg = false; // reset for next connection
+      hasSentConnectedMsg = true; // reset for next connection
     }
   } else if (connection === 'open' && !hasSentConnectedMsg) {
     console.log(color("⚔️ 𝔹𝕃𝔸ℂ𝕂 𝕄𝔻 has successfully connected to this server", "green"));
