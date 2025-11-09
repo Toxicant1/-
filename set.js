@@ -30,7 +30,7 @@ const appname = process.env.APP_NAME || '';
 const botname = process.env.BOTNAME || '𝐁𝐋𝐀𝐂𝐊-𝐌𝐃 𝐁𝐎𝐓';
 const herokuapi = process.env.HEROKU_API;
 const gptdm = process.env.GPT_INBOX || 'FALSE';
-const wapresence = process.env.WA_PRESENCE || 'recording';
+const wapresence = process.env.WA_PRESENCE || 'typing';
 const mycode = process.env.CODE || '254';
 const port = process.env.PORT || 10000;
 
