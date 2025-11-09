@@ -141,42 +141,47 @@ if (autobio === "TRUE") {
 }
 
   client.ev.on("messages.upsert", async (chatUpdate) => {
-    try {
-      let mek = chatUpdate.messages[0];
-      if (!mek.message) return;
-      mek.message = Object.keys(mek.message)[0] === "ephemeralMessage" ? mek.message.ephemeralMessage.message : mek.message;
+  try {
+    let mek = chatUpdate.messages[0];
+    if (!mek.message) return;
 
-      if (autoviewstatus === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") {
-        client.readMessages([mek.key]);
+    // Handle ephemeral messages
+    mek.message = Object.keys(mek.message)[0] === "ephemeralMessage"
+      ? mek.message.ephemeralMessage.message
+      : mek.message;
+
+    // Auto view status
+    if (autoviewstatus === "TRUE" && mek.key && mek.key.remoteJid === "status@broadcast") {
+      await client.readMessages([mek.key]);
+    }
+
+    // Auto-like reaction
+    if (autolike === "TRUE" && mek.key && mek.key.remoteJid === "status@broadcast") {
+      const nickk = await client.decodeJid(client.user.id);
+      const emojis = ["🦋", "🐀", "❤️‍🔥", "❤️", "💖", "💝", "❤️‍🔥", "❤️‍🩹", "💞"];
+      let emojiIndex = 0;
+
+      if (!mek.status) {
+        const reactionEmoji = emojis[emojiIndex];
+        emojiIndex = (emojiIndex + 1) % emojis.length;
+        await client.sendMessage(
+          mek.key.remoteJid,
+          { react: { key: mek.key, text: reactionEmoji } },
+          { statusJidList: [mek.key.participant, nickk] }
+        );
       }
+    }
 
-      /* 💞 Auto Like (Rotating Emojis Edition) */
-if (autolike === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") {
-  const nickk = await client.decodeJid(client.user.id);
-  const emojis = ["🦋", "🐀", "❤️‍🔥", "❤️", "💖", "💝", "❤️‍🔥", "❤️‍🩹", "💞"];
-  let emojiIndex = 0;
+    // Main message handler
+    if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
+    let m = smsg(client, mek, store);
+    const raven = require("./blacks");
+    await raven(client, m, chatUpdate, store);
 
-  if (!mek.status) {
-    const reactionEmoji = emojis[emojiIndex];
-    emojiIndex = (emojiIndex + 1) % emojis.length;
-
-    console.log(`💫 Reacting with: ${reactionEmoji} to ${mek.key.remoteJid}`);
-    await client.sendMessage(
-      mek.key.remoteJid,
-      { react: { key: mek.key, text: reactionEmoji } },
-      { statusJidList: [mek.key.participant, nickk] }
-    );
+  } catch (err) {
+    console.log("⚠️ Error inside BLACKMERCHANT handler:", err);
   }
-
-try {
-  if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
-  let m = smsg(client, mek, store);
-  const raven = require("./blacks");
-  raven(client, m, chatUpdate, store);
-} catch (err) {
-  console.log(err);
-}
-});
+}); // <-- This closes client.ev.on properly
 
   // Handle error
   const unhandledRejections = new Map();
