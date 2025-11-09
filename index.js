@@ -168,14 +168,15 @@ if (autolike === 'TRUE' && mek.key && mek.key.remoteJid === "status@broadcast") 
     );
   }
 
-if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
-      let m = smsg(client, mek, store);
-      const raven = require("./blacks");
-      raven(client, m, chatUpdate, store);
-    } catch (err) {
-      console.log(err);
-    }
-  });
+try {
+  if (!client.public && !mek.key.fromMe && chatUpdate.type === "notify") return;
+  let m = smsg(client, mek, store);
+  const raven = require("./blacks");
+  raven(client, m, chatUpdate, store);
+} catch (err) {
+  console.log(err);
+}
+});
 
   // Handle error
   const unhandledRejections = new Map();
