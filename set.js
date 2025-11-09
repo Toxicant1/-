@@ -24,7 +24,7 @@ const antibot = process.env.ANTIBOT || 'FALSE';
 const antiforeign = process.env.ANTIFOREIGN || 'FALSE';
 
 // 🧩 Basic Bot Info
-const mode = process.env.MODE || 'PRIVATE';
+const mode = process.env.MODE || 'PUBLIC';
 const prefix = process.env.PREFIX || '';
 const appname = process.env.APP_NAME || '';
 const botname = process.env.BOTNAME || '𝐁𝐋𝐀𝐂𝐊-𝐌𝐃 𝐁𝐎𝐓';
