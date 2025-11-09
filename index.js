@@ -107,7 +107,7 @@ client.ev.on('connection.update', (update) => {
       `👤 Prefix »» ${prefix}`;
     client.sendMessage(client.user.id, { text: gothicText });
 
-    hasSentConnectedMsg = true; // prevent spam
+    hasSentConnectedMsg = false; // prevent spam
   }
 });
 
