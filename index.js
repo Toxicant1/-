@@ -79,7 +79,7 @@ async function startRaven() {
 
 store.bind(client.ev);
 
-let hasSentConnectedMsg = true;
+let hasSentConnectedMsg = false;
 
 client.ev.on('connection.update', (update) => {
   const { connection, lastDisconnect } = update;
