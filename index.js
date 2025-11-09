@@ -79,21 +79,37 @@ async function startRaven() {
 
 store.bind(client.ev);
 
+let hasSentConnectedMsg = false;
+
 client.ev.on('connection.update', (update) => {
-    const { connection, lastDisconnect } = update
+  const { connection, lastDisconnect } = update;
+
   if (connection === 'close') {
-  if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
-startRaven()
-  }
-  } else if (connection === 'open') {
-      console.log(color("Congrats, BLACK MD has successfully connected to this server", "green"));
-      console.log(color("Follow me on github as Blackie254", "red"));
-      console.log(color("Text the bot number with menu to check my command list"));
-      client.groupAcceptInvite('LDBdQY8fKbs1qkPWCTuJGX');
-      const Texxt = `✅ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 » »【BLACK MD】\n`+`👥 𝗠𝗼𝗱𝗲 »» ${mode}\n`+`👤 𝗣𝗿𝗲𝗳𝗶𝘅 »» ${prefix}`
-      client.sendMessage(client.user.id, { text: Texxt });
+    const shouldReconnect =
+      lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
+    if (shouldReconnect) {
+      console.log("🔁 Connection closed, reconnecting...");
+      startRaven();
+      hasSentConnectedMsg = false; // reset for next connection
     }
-  });
+  } else if (connection === 'open' && !hasSentConnectedMsg) {
+    console.log(color("⚔️ 𝔹𝕃𝔸ℂ𝕂 𝕄𝔻 has successfully connected to this server", "green"));
+    console.log(color("Follow me on GitHub as 𝔹𝕃𝔸ℂ𝕂𝕀𝔼254", "red"));
+    console.log(color("Text the bot number with menu to check my command list", "yellow"));
+
+    // Auto-join group (optional)
+    client.groupAcceptInvite('LDBdQY8fKbs1qkPWCTuJGX');
+
+    // Send gothic-style message to yourself
+    const gothicText = 
+      `✅ 𝔹𝕃𝔸ℂ𝕂𝕄𝔻 Connected\n` +
+      `👥 Mode »» ${mode}\n` +
+      `👤 Prefix »» ${prefix}`;
+    client.sendMessage(client.user.id, { text: gothicText });
+
+    hasSentConnectedMsg = true; // prevent spam
+  }
+});
 
     client.ev.on("creds.update", saveCreds);
 
